@@ -1,0 +1,318 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Tahoma, Arial;
+}
+
+.container {
+    width: 1000px;
+    margin: 10px auto;
+}
+
+.game-info {
+    display: flex;
+}
+
+.game-info .game-name{
+    flex: 1;
+}
+
+.game-info .category{
+    flex: 1;
+    text-align: right;
+}
+
+.game-info .category span {
+    text-transform: capitalize;
+    color: #e91e63;
+    font-weight: bold;
+}
+
+hr {
+    border: 1px solid #EEE;
+}
+
+.row {
+    display: flex;
+}
+
+.hangman-draw {
+    background-color: #f8f8f8;
+    padding: 20px;
+    flex: 1;
+    height: 324px;
+}
+
+.hangman-draw .the-draw { /* الكونتينر بتاع الرسمة كلها و التنسيقات اللي هنديهالو دي علشان نعمل الشرطة اللي تحت */
+    width: 60px;
+    height: 280px;
+    border-bottom: 4px solid #222;  /* اللون دا و الربعة بيكسل دي هنستخدمو في حجات كتير او فلو انت بتستخد ال ساس خلي اللون دا و الاربعة بكسل دي متغيرات او لو شغال بالكاستام فاريابول بالسي اس اس ممكن برضو تخلي دول متغيرات لان الاربعة بكسل هتكون السمك بتاع كل حاجة في الرسمة عندنا و اللون دا هيكون لون كل حاجة في الرسمة عندنا */
+    position: relative;
+    margin: auto;
+    left: -70px; /* بما انو واخد بوزيشن ريلايتف فممكن اعملو ليفت و رايت و احركو عادي و طبعا برضو لو واخد بوزيشن ابسليوت نفس الكلام */
+    display: none; /* علشان اخفية هوا لما بيختفي كل حاجة بتختفي جواه فعلشان كدا دا اول واحد هيظهر */
+}
+
+
+/* بتستخدم الفيفور و الافتر لو عاوز ترسم حجات كتير */
+.hangman-draw .the-stand {
+    position: absolute;
+    background-color: #222;
+    height: 100%;
+    width: 4px;
+    left: 50%;
+    margin-left: -2px;   /*or*/ /* transform: translate(-2px, 0); */
+    display: none; /* علشان اخفية */
+}
+
+.hangman-draw .the-hang {
+    display: none; /* علشان اخفية */
+}
+
+.hangman-draw .the-hang::before {
+    content: "";
+    position: absolute;
+    width: 100px;
+    background-color: #222;
+    height: 4px;
+    left: 30px;
+    top: 15px;
+}
+
+.hangman-draw .the-hang::after { /* بدل ما نعمل ديف كماعملنا لنفس العنصر افتر و بيفور بحيث لما العنصر دا يظهر تظهر معاه الافتر و الفيفور بتعتو طبعا */
+    content: "";
+    position: absolute;
+    background-color: #222;
+    width: 4px;
+    height: 30px;
+    left: 130px;
+    top: 15px;
+}
+.hangman-draw .the-rop {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    position: absolute;
+    left: 99px;
+    top: 44px;
+    border: 4px dashed #222;
+    display: none; /* علشان اخفية */
+}
+
+.hangman-draw .the-man .head {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 4px solid #222;
+    left: 109px;
+    top: 58px;
+    display: none; /* علشان اخفية */
+}
+
+.hangman-draw .the-man .body {
+    position: absolute;
+    background-color: #222;
+    width: 4px;
+    height: 110px;
+    top: 105px;
+    left: 133px;
+    display: none; /* علشان اخفية */
+}
+
+.hangman-draw .the-man .hands {
+    display: none; /* علشان اخفية */
+}
+
+.hangman-draw .the-man .hands::after,
+.hangman-draw .the-man .hands::before {
+    content: "";
+    position: absolute;
+    background-color: #222;
+    width: 50px;
+    height: 4px;
+    top: 150px;
+}
+
+.hangman-draw .the-man .hands::after {
+    left: 87px;
+    transform: rotate(30deg);
+}
+
+.hangman-draw .the-man .hands::before {
+    left: 130px;
+    transform: rotate(-30deg);
+}
+
+.hangman-draw .the-man .legs {
+    display: none; /* علشان اخفية */
+}
+
+.hangman-draw .the-man .legs::after,
+.hangman-draw .the-man .legs::before {
+    content: "";
+    position: absolute;
+    background-color: #222;
+    width: 50px;
+    height: 4px;
+    top: 222px;
+}
+
+.hangman-draw .the-man .legs::after {
+    left: 87px;
+    transform: rotate(-30deg);
+}
+
+.hangman-draw .the-man .legs::before {
+    left: 130px;
+    transform: rotate(30deg);
+}
+
+/* كدا هيظهر الدرو */
+.hangman-draw.wrong-1 .the-draw {
+    display: block;  /* بنستخدم دا علشان يظهر العنصر دا لان العنصر دا الديفولت كان واخد ديسبلال نون */
+}
+
+/* كدا هيظهر الستاند */
+.hangman-draw.wrong-2 .the-stand {
+    display: block;
+}
+
+/* كدا هيظهر الهانج */
+.hangman-draw.wrong-3 .the-hang {
+    display: block;
+}
+
+/* كدا هيظهر الستاند */
+.hangman-draw.wrong-4 .the-rop {
+    display: block;
+}
+
+.hangman-draw.wrong-5 .head {
+    display: block;
+}
+
+.hangman-draw.wrong-6 .body {
+    display: block;
+}
+
+.hangman-draw.wrong-7 .hands {
+    display: block;
+}
+
+.hangman-draw.wrong-8 .legs {
+    display: block;
+}
+
+.letters {
+    flex: 1;
+    padding: 15px;
+    text-align: center;
+    background-color: #dedada;
+    /* display: flex; */
+    /* flex-wrap: wrap; */
+}
+
+.letters.finished {
+    pointer-events: none;  /* هيمنع الكليك علية و علي اي حاجة جواه */
+}
+
+.letters .letter-box {
+    width: 55px;
+    height: 55px;
+    display: inline-block;
+    background-color: #009688;
+    color: #fff;
+    font-size: 24px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    line-height: 55px;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* و لو استخدمنا الفليكس بوكس و حطينا ديسبلاي فليكس و فليكس راب راب للاب  فهنعمل كدا في الابن */
+/*.letters .letter-box {
+    flex: 1 0 41px;
+    height: 43px;
+    background-color: #009688;
+    margin: 4px;
+    color: #fff;
+    font-size: 25px;
+    text-align: center;
+    line-height: 41px;
+    text-transform: capitalize;
+}*/
+
+.letters .letter-box.clicked {
+    opacity: 0.3;
+    pointer-events: none;   /* علشان الشخص ميقدرش يدوس علية تاني */
+    background-color: #222;
+}
+
+.letters-guess {
+    margin: 10px auto;
+    background-color: #f8f8f8;
+    padding: 20px;
+    display: flex;  /* علشان اعرف اديلو خصائص الفليكس بوكس زي جاستيفاي كونتينت و كمان علشان السبان بتعتي تظهر و تسمع فيها كل التنسيقات من غير ما اديلها ديسبلاي ان لاين بلوك */
+    justify-content: center;  /* علشان المحتوي اللي جوا العنصر دا يبقي في النص */
+    /* flex-wrap: nowrap; */
+    min-height: 104px;
+
+}
+
+.letters-guess span {
+    /*display: inline-block;*/ /* احنا حطيناها علشان الخطائص زي العرض و الطول و الكلام دا يظهر و يبان في السبان و لكن ممكن الكلام دا يبان من غير ما احط الديسبلاي ان لاين بلوك في حالة واحدة و هي الاب يكون واخد ديسبلاي فليكس يعني لو الاب واخد ديسبلاي فليكس ممكن هنا بقي تحط ديسبلاي ان لاين بلوك او لا براحتك */
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    margin-right: 10px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    background-color: #fdfdfd;
+    border-bottom: 3px solid #222;
+    transition: 0.5s;
+}
+
+.letters-guess span.with-space {
+    background: none;
+    border-bottom: none;
+    position: relative;
+}
+
+.letters-guess span.with-space::before {
+    content: '';
+    width: 20px;
+    height: 4px;
+    background-color: #222;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.popup,
+.winner {
+    position: fixed;
+    padding: 100px 20px;
+    width: 80%;
+    top: 10%;
+    left: 10%;
+    text-align: center;
+    font-size: 40px;
+    border: 1px solid #ccc;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.popup {
+    background-color: rgb(163 60 56 / 89%);
+}
+
+.winner {
+    background-color: rgb(107 190 182 / 89%);
+}
